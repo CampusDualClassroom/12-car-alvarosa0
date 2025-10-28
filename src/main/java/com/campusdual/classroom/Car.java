@@ -11,78 +11,118 @@ public class Car {
     public boolean reverse = false;
     public int wheelsAngle = 0;
 
-    public Car (String brand, String model, String fuel){
+    public Car(String brand, String model, String fuel) {
         this.brand = brand;
         this.model = model;
         this.fuel = fuel;
     }
 
-    public Car(){
+    public Car() {
         this.brand = "Citroën";
         this.model = "Xsara";
         this.fuel = "Diesel";
     }
 
     public void start() {
-        if (this.tachometer == 0){
+        if (this.tachometer == 0) {
             this.tachometer = 1000;
             System.out.println("Vehículo encendido");
-        }else{
+        } else {
             System.out.println("Vehículo ya está encendido");
         }
     }
 
     public void stop() {
-        if (this.speedometer == 0){
+        if (this.speedometer == 0) {
             this.tachometer = 0;
             System.out.println("Vehículo apagado");
-        }else{
+        } else {
             System.out.println("No se puede apagar el vehículo. Primero tiene que estar detenido");
         }
     }
-    public void accelerate(){
 
+    public void accelerate() {
+        if (this.speedometer < MAX_SPEED) {
+            this.speedometer += 10;
+            if (this.speedometer > MAX_SPEED) {
+                this.speedometer = MAX_SPEED;
+            }
+            System.out.println("Velocidad: " + this.speedometer + " km/h");
+        } else {
+            System.out.println("No se puede superar la velocidad maxima: " + MAX_SPEED + " km/h");
+        }
     }
 
-    public void brake(){
 
+    public void brake() {
+        if (this.speedometer > 0) {
+            this.speedometer -= 10;
+            if (this.speedometer < 0) {
+                this.speedometer = 0;
+            }
+            System.out.println("Velocidad : " + this.speedometer + " km/h");
+        } else {
+            System.out.println("El coche ya está detenido");
+        }
     }
 
-    public void turnAngleOfWheels(int angle){
+    public void turnAngleOfWheels(int angle) {
+            if (angle > 45) {
+                this.wheelsAngle = 45;
+            } else if (angle < -45) {
+                this.wheelsAngle = -45;
+            } else {
+                this.wheelsAngle = angle;
+            }
+            System.out.println("Ángulo del volante: " + this.wheelsAngle + "º");
+        }
 
+
+
+    public String showSteeringWheelDetail() {
+        return "Volante en " + this.wheelsAngle + " grados";
     }
 
-    public String showSteeringWheelDetail(){
 
-        return "";
+    public boolean isReverse() {
+        return this.reverse;
     }
 
-    public boolean isReverse(){
 
-        return false;
+    public void setReverse(boolean reverse) {
+        if (this.speedometer == 0) {
+            this.reverse = reverse;
+            if (reverse) {
+                this.gear = "R";
+                System.out.println("Coche en marcha atrás");
+            } else {
+                this.gear = "N";
+                System.out.println("Coche en posición neutra");
+            }
+        } else {
+            System.out.println("No se puede poner marcha atrás cuando el coche está en movimiento");
+        }
     }
 
-    public void setReverse(boolean reverse){
 
+    public void showDetails() {
+        System.out.println("Marca: " + brand);
+        System.out.println("Modelo: " + model);
+        System.out.println("Combustible: " + fuel);
+        System.out.println("Velocidad: " + speedometer + " km/h");
+        System.out.println("Tacometro: " + tachometer);
+        System.out.println("Marcha: " + gear);
+        System.out.println("Volante: " + wheelsAngle + "º");
+        System.out.println("Reversa: " + reverse);
     }
 
-    public void showDetails(){
-
-    }
 
     public boolean isTachometerGreaterThanZero() {
-
-        return false;
+        return this.tachometer > 0;
     }
+
 
     public boolean isTachometerEqualToZero() {
-
-        return false;
+        return this.tachometer == 0;
     }
-
-    public static void main(String[] args) {
-
     }
-
-
-}
